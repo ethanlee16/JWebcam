@@ -5,10 +5,11 @@ public class Filter {
 	private int deltaRed, deltaGreen, deltaBlue;
 	public BufferedImage frame;
 	
-	public Filter() {
+	public Filter(BufferedImage firstFrame) {
 		deltaRed = 0;
 		deltaBlue = 0;
 		deltaGreen = 0;
+		frame = firstFrame;
 	}
 	
 	public Filter(BufferedImage img, int red, int green, int blue) {
@@ -24,7 +25,7 @@ public class Filter {
 	
 	public void setDeltaRed(int r) {
 		deltaRed = r;
-		System.out.println(deltaRed);
+		//System.out.println(deltaRed);
 	}
 	
 	public void setDeltaGreen(int g) {

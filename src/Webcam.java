@@ -8,8 +8,9 @@
  public class Webcam extends JPanel {
 	 
       private static final long serialVersionUID = 1L; 
+      private static final double VERSION_NUMBER = 1.0;
       
-      private static BufferedImage image;  
+      private static BufferedImage image;
 
       public Webcam(){  
            super();   
@@ -18,7 +19,7 @@
       public static void main(String args[]) {  
  		 System.loadLibrary("opencv_java2410");  
  		 
- 		 JFrame frame = new JFrame("Webcam");
+ 		 JFrame frame = new JFrame("JWebcam");
  		 Webcam panel = new Webcam();
  		 
  		 // Initialize JPanel parameters
@@ -28,8 +29,10 @@
  		 frame.setVisible(true);
  		 
  		 Mat currentImage = new Mat();
- 		 Filter boost = new Filter(image, 0, 0, 0);
-
+ 		 Filter boost = new Filter(image, 100, 0, 0);
+ 		 MirrorFilter reflect = new MirrorFilter(image);
+ 		 EdgeDetectFilter edgeDetect = new EdgeDetectFilter(image, 5);
+ 		 BWFilter bw = new BWFilter(image);
  		 
  		 // VideoCapture and Mat are classes from OpenCV
  		 VideoCapture capture = new VideoCapture(0);   
@@ -44,9 +47,9 @@
  					 boost.setFrame(image);
  					 
  					// TRIPPY
- 					 boost.setDeltaRed((int) (Math.random() * 255));
- 					 boost.setDeltaGreen((int) (Math.random() * 255));
- 					 boost.setDeltaBlue((int) (Math.random() * 255));
+ 					boost.setDeltaRed((int) (Math.random() * 255));
+ 					boost.setDeltaGreen((int) (Math.random() * 255));
+ 					boost.setDeltaBlue((int) (Math.random() * 255));
  					 
  					 boost.filterAll();
  			    	 image = boost.getFrame();
@@ -87,6 +90,6 @@
     	 
     	  g.drawImage(image, 10, 10, image.getWidth(), image.getHeight(), null);
     	  g.setColor(Color.WHITE);
-    	  g.drawString("JWebcam v1.0 by Ethan Lee", 30, 40);  
+    	  g.drawString("JWebcam v" + VERSION_NUMBER + " by Ethan Lee", 30, 40);  
       }  
  }  
